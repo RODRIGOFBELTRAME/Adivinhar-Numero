@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenta Adivinhar</title>
+    <style>
+        body {
+            background-color: darkcyan;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-items: center;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 50px;
+            border: 1px solid #999;
+            background-color: #CCC;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <h1>Adivinhe um numero em 10 tentativas</h1>
+            <p class="resultado">Escolha um numero de 1 a 100!</p>
+            <hr>
+            <input type="number" name="n" id="n" min="1" max="100" step="1" required>
+            <button>Testar</button>
+        </main>
+    </div>
+    <script>
+        // declara&#195;&#167;&#195;&#163;o das vari&#195;&#161;veis
+        const h1 = document.querySelector("h1");
+        const resultado = document.querySelector(".resultado");
+        const n = document.getElementById("n");
+        const botao = document.querySelector("button");
+        let sorteado = 0;
+        let tentativas = 10;
+
+        /**
+         * sorteia um n&#195;&#186;mero entre 1 e 100)
+        */
+        function sortear() {
+            return Math.ceil(Math.random() * 100);
+        }
+
+        function iniciar() {
+            sorteado = sortear();
+            console.log(sorteado);
+            n.value = '';
+            tentativas = 10;
+            h1.innerHTML = "Adivinhe um numero em " + tentativas + " tentativas";
+        }
+
+        function verificar() {
+            if (n.value == sorteado) {
+                resultado.innerHTML = "voce ganhou";
+                iniciar();
+                return true;
+            }
+            else if (n.value > sorteado) {
+                resultado.innerHTML = "o numero é menor";
+            }
+            else {
+                resultado.innerHTML = "o numero é maior";
+            }
+            return false;
+        }
+
+        function jogar() {
+            if (tentativas > 0 && !verificar()) {
+                tentativas--;
+                h1.innerHTML = "Adivinhe um numero em " + tentativas + " tentativas";
+            }
+            if (tentativas <= 0 && !verificar()) {
+                resultado.innerHTML = "você perdeu";
+                iniciar();
+            }
+        }
+        iniciar();
+        botao.addEventListener("click", jogar);
+    </script>
+</body>
+
+</html>
